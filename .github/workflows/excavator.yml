@@ -2,15 +2,25 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '30 */8 * * *'
+  push:
+    branches:
+      - main
 
 name: Excavator
 jobs:
   excavate:
-    name: Excavate
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@main
-      - name: Excavate
-        uses: ScoopInstaller/GithubActions@main
+      - uses: ScoopInstaller/GithubActions@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 0
