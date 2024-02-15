@@ -2,7 +2,7 @@
     "version": "2.7.6",
     "description": "A cross-platform software for text translation and recognition.",
     "homepage": "https://github.com/pot-app/pot-desktop",
-    "license": "GPL-3.0-only",
+    "license": "GPL-3.0",
     "architecture": {
         "64bit": {
             "url": "https://github.com/pot-app/pot-desktop/releases/download/2.7.6/pot_2.7.6_x64-setup.exe#/dl.7z",
