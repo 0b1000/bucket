@@ -1,10 +1,10 @@
 {
-    "version": "3.4.4.5",
+    "version": "3.4.4.6",
     "description": "Steam Game Automatic Cracker",
     "homepage": "https://github.com/oureveryday/Steam-auto-crack",
     "license": "MIT",
-    "url": "https://github.com/oureveryday/Steam-auto-crack/releases/download/3.4.4.5/SteamAutoCrack.zip",
-    "hash": "9b474c641cb4e79a7df8f097ebb5f5c46d09ea0a6ab085505fe0dfdb10f09ffb",
+    "url": "https://github.com/oureveryday/Steam-auto-crack/releases/download/3.4.4.6/SteamAutoCrack.zip",
+    "hash": "38ec3123520755016ff090416af31d801014e8a863046a20f3d89af22ecf026a",
     "shortcuts": [
         [
             "SteamAutoCrack.exe",
