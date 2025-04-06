@@ -1,12 +1,12 @@
 {
-    "version": "0.11.1",
+    "version": "0.11.2",
     "description": "An all-purpose window upscaler for Windows 10/11.",
     "homepage": "https://github.com/Blinue/Magpie",
     "license": "GPL-3.0",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/Blinue/Magpie/releases/download/v0.11.1/Magpie-v0.11.1-x64.zip",
-            "hash": "a4ad3b930df5589ea334f90ce0f2a54976dee91184c6a2cb612b28a9f743c3e7"
+            "url": "https://github.com/Blinue/Magpie/releases/download/v0.11.2/Magpie-v0.11.2-x64.zip",
+            "hash": "8ed174de9bf0e10f5e9ddd7888d77e74d403d9255120ef88be6642ac1b038744"
         }
     },
     "shortcuts": [
