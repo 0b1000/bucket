@@ -17,7 +17,7 @@ scoop install 0b1000/<package>
 
 ## Tips
 
-If you encounter a **hash verification** error, it may be because the provider modified the release file without changing the version number. Please **skip verification** to install or update it and wait for the next time CI to be automatically updated.
+If you encounter a **hash verification** error, please **skip verification** to install or update it and wait for the next CI to be automatically updated.
 
 ```powershell
 # For install package
