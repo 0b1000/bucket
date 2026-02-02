@@ -1,0 +1,29 @@
+{
+    "version": "3.3.1",
+    "description": "An image upload and manage tool, base on PicGo.",
+    "homepage": "https://piclist.cn/",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Kuingsmile/PicList/releases/download/3.3.1/PicList-Setup-3.3.1-x64-portable.7z",
+            "hash": "b1bc4c38267af704ca3ed510854042c19d6f93a2b7e5c34fb469626e249caac2"
+        }
+    },
+    "bin": "PicList.exe",
+    "shortcuts": [
+        [
+            "PicList.exe",
+            "PicList"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/Kuingsmile/PicList"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Kuingsmile/PicList/releases/download/$version/PicList-Setup-$version-x64-portable.7z"
+            }
+        }
+    }
+}
