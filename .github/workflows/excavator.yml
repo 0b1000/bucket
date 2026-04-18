@@ -1,3 +1,5 @@
+name: Excavator
+
 on:
   workflow_dispatch:
   schedule:
@@ -6,7 +8,6 @@ on:
     branches:
       - main
 
-name: Excavator
 jobs:
   excavate:
     runs-on: windows-latest
