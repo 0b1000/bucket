@@ -43,6 +43,8 @@ FossHub / SourceForge download URLs are auto-detected, so no `hash` block is nee
 
 **Upstream publishes a checksum?** Wire `autoupdate.hash` to pull it (a SHA256SUMS file, checksums page, or API field) — Scoop fetches the hash without downloading the binary. Fast.
 
+**Upstream publishes no checksum?** Keep the manifest's `"hash": "<sha256>"` placeholder and run `.\bin\checkhashes.ps1 <app> -Update` — Scoop downloads each URL via its own fetcher and writes the real SHA256 back (the placeholder must be present; a missing `hash` field aborts with "URLS and hashes count mismatch"). Excavator's download fallback only computes a hash on a version bump (`Invoke-AutoUpdate`, for the new version's URL), never backfilling the already-shipped version. Do not hand-roll `Get-FileHash` + `Invoke-WebRequest`/`curl`.
+
 ## Substitution variables
 
 - Version: `$version`, `$underscoreVersion`, `$dashVersion`, `$cleanVersion`, `$majorVersion` / `$minorVersion` / `$patchVersion` / `$buildVersion`, `$matchHead` (first 2–3 dotted segments), `$matchTail`, `$preReleaseVersion`.

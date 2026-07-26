@@ -150,7 +150,7 @@ Mirrors Main's `nodejs.json`.
 
 ## Template C — 64bit + arm64, raw .exe, product homepage
 
-Mirrors `bucket/zread.json`. The `#/` fragment renames each per-arch binary to a stable `bin` target.
+Single-binary GitHub releases with no upstream checksum. Keep the `"hash": "<sha256>"` placeholders and run `.\bin\checkhashes.ps1 <app> -Update` to fill them (Scoop downloads + computes); Excavator only hashes on version bumps, never the shipped version, so do not drop the placeholders. The `#/` fragment renames each per-arch binary to a stable `bin` target.
 
 ```json
 {
@@ -160,10 +160,12 @@ Mirrors `bucket/zread.json`. The `#/` fragment renames each per-arch binary to a
     "license": "Proprietary",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/<owner>/<repo>/releases/download/v0.2.13/<app>-windows-x64.exe#/<app>.exe"
+            "url": "https://github.com/<owner>/<repo>/releases/download/v0.2.13/<app>-windows-x64.exe#/<app>.exe",
+            "hash": "<sha256>"
         },
         "arm64": {
-            "url": "https://github.com/<owner>/<repo>/releases/download/v0.2.13/<app>-windows-arm64.exe#/<app>.exe"
+            "url": "https://github.com/<owner>/<repo>/releases/download/v0.2.13/<app>-windows-arm64.exe#/<app>.exe",
+            "hash": "<sha256>"
         }
     },
     "bin": "<app>.exe",

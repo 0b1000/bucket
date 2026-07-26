@@ -11,6 +11,8 @@ Produce `bucket/<name>.json` — a complete, validated Scoop app manifest. The o
 
 `bin/formatjson.ps1` normalizes whitespace and values but does not reorder keys, so reorder any manifest you touch to the canonical field order — it keeps diffs reviewable and matches ScoopInstaller/Main conventions. The field order and full templates live in `references/templates.md`.
 
+Do not hand-roll `Get-FileHash` + `Invoke-WebRequest`/`curl` to download binaries and compute hashes — use `.\bin\checkhashes.ps1`, which downloads via Scoop's own fetcher and computes. See `## autoupdate` for the no-upstream-checksum case.
+
 ## File placement & naming
 
 - Path: `bucket/<name>.json`.
@@ -40,6 +42,8 @@ Two common forms:
 ## autoupdate
 
 `autoupdate` mirrors the manifest (field list in `references/checkver-autoupdate.md`).
+
+No upstream checksum? Keep the template's `"hash": "<sha256>"` placeholder and run `.\bin\checkhashes.ps1 <app> -Update` (Scoop downloads each URL and writes the real SHA256 back); Excavator only computes hashes on version bumps, never backfilling the shipped version — so do not ship hashless. No hand-rolled `Get-FileHash` + `Invoke-WebRequest`/`curl`.
 
 ## Validation
 
