@@ -1,11 +1,11 @@
 {
     "version": "240701",
     "homepage": "https://3.jetbra.in/",
+    "url": "https://ipfs.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i/files/jetbra-8f6785eac5e6e7e8b20e6174dd28bb19d8da7550.zip",
+    "hash": "d5d543ee8643264f50f1f30462daaa80a4f9a07e11c0bc88b48ae0893786e865",
     "extract_dir": "jetbra",
     "persist": [
         "config-jetbrains",
         "plugins-jetbrains"
-    ],
-    "url": "https://ipfs.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i/files/jetbra-8f6785eac5e6e7e8b20e6174dd28bb19d8da7550.zip",
-    "hash": "d5d543ee8643264f50f1f30462daaa80a4f9a07e11c0bc88b48ae0893786e865"
+    ]
 }
