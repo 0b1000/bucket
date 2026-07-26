@@ -145,6 +145,41 @@ url, hash, extract_dir, extract_to, architecture
 }
 ```
 
+### Template C — dual-arch (64bit + arm64), raw `.exe`, product homepage (mirrors `bucket/zread.json`)
+
+For single-binary GitHub releases with **no published checksum**: omit `hash` entirely (manifest + `autoupdate`); Excavator fills hashes in CI. The `#/` fragment renames each per-arch binary to a stable `bin` target.
+
+```json
+{
+    "version": "0.2.13",
+    "description": "Turns your local codebase into readable docs.",
+    "homepage": "https://z.ai/",
+    "license": "Proprietary",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/<owner>/<repo>/releases/download/v0.2.13/<app>-windows-x64.exe#/<app>.exe"
+        },
+        "arm64": {
+            "url": "https://github.com/<owner>/<repo>/releases/download/v0.2.13/<app>-windows-arm64.exe#/<app>.exe"
+        }
+    },
+    "bin": "<app>.exe",
+    "checkver": {
+        "github": "https://github.com/<owner>/<repo>"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/<owner>/<repo>/releases/download/v$version/<app>-windows-x64.exe#/<app>.exe"
+            },
+            "arm64": {
+                "url": "https://github.com/<owner>/<repo>/releases/download/v$version/<app>-windows-arm64.exe#/<app>.exe"
+            }
+        }
+    }
+}
+```
+
 ## Field reference
 
 ### Required / near-required
@@ -156,7 +191,7 @@ url, hash, extract_dir, extract_to, architecture
 
 ### Download
 
-- `url`: string or array. Append a URL fragment starting with `#/` to rename the saved file, e.g. `program.exe#/dl.7z` — Scoop saves it as `dl.7z` and extracts it, bypassing NSIS installers / UAC / registry writes.
+- `url`: string or array. Append a URL fragment starting with `#/` to rename the saved file, e.g. `program.exe#/dl.7z` — Scoop saves it as `dl.7z` and extracts it, bypassing NSIS installers / UAC / registry writes. The same fragment also stabilizes a per-arch binary name (e.g. `zread-windows-x64.exe#/zread.exe`) so `bin`/`shortcuts` targets don't vary by arch.
 - `hash`: string or array aligned with `url`. SHA256 by default; prefix `sha1:` / `md5:` / `sha512:` for other algorithms.
 - `extract_dir`: pull a specific subdirectory out of the archive.
 - `extract_to`: extract ALL content into the given directory (distinct from `extract_dir`).
@@ -211,6 +246,8 @@ Every manifest needs `checkver` + `autoupdate`; a version-only manifest is unfin
 - `{ "url": "<page>", "xpath": "..." }` — XPath.
 - Extras: `reverse: true` (match the last occurrence), `replace` (rewrite the matched value), `useragent`, `script` (PowerShell for multi-hop/complex cases).
 
+**Pitfall — `homepage` ≠ repo:** the string form `"github"` derives the repo from `homepage`. If `homepage` is a product/marketing page rather than the GitHub repo (e.g. `https://z.ai/`), it fails with `checkver expects the homepage to be a github repository`. Use the object form `{ "github": "<repo-url>" }` and keep `homepage` as the product page. See `bucket/zread.json`.
+
 `checkver` and `autoupdate` always appear together; if you can't yet derive the version, leave a TODO.
 
 ## autoupdate
@@ -228,6 +265,10 @@ Mirrors the manifest: most fields can live in `autoupdate` — `url`, `hash`, `e
 
 FossHub / SourceForge download URLs are auto-detected, so no `hash` block is needed.
 
+**Upstream publishes a checksum?** Wire `autoupdate.hash` to PULL it (a SHA256SUMS file, checksums page, or API field) — Scoop fetches the hash without downloading the binary. Fast.
+
+**Upstream publishes no checksum?** (common for single-binary GitHub releases like `zread`): **omit `hash` entirely** — from both the manifest and `autoupdate`. Do NOT compute hashes by hand (`Get-FileHash`) and do NOT run `checkver -ForceUpdate` to bootstrap; both download every asset and waste time. Ship the manifest hashless. Scoop install will warn "No hash in manifest" but still install; Excavator will compute hashes in CI on future releases via autoupdate's download fallback (when `url` autoupdates, `Invoke-AutoUpdate` always re-adds `hash`).
+
 ## Substitution variables
 
 - Version: `$version`, `$underscoreVersion`, `$dashVersion`, `$cleanVersion`, `$majorVersion` / `$minorVersion` / `$patchVersion` / `$buildVersion`, `$matchHead` (first 2–3 dotted segments), `$matchTail`, `$preReleaseVersion`.
@@ -235,30 +276,33 @@ FossHub / SourceForge download URLs are auto-detected, so no `hash` block is nee
 - Hash: `$md5`, `$sha1`, `$sha256`, `$sha512`, `$checksum` (any), `$base64`.
 - Captured (from `checkver.regex` groups): use `$match1` / `$matchName` inside `autoupdate`; use `${1}` / `${name}` inside `checkver.replace`. Named-group variable names are camelCase with only the first letter uppercase (e.g. `$matchVersion`, `$matchShort`).
 
-## Validation (run from repo root)
+## Validation (run from repo root, in this order)
 
 All scripts delegate to the local Scoop install (`scoop prefix scoop`); Scoop must be installed.
 
-```powershell
-.\bin\formatjson.ps1            # normalize formatting/values, validate JSON parses
-.\bin\checkver.ps1 <app>        # query current version
-.\bin\checkver.ps1 <app> -u     # autoupdate the manifest
-.\bin\checkurls.ps1 <app>       # verify download URLs resolve
-.\bin\checkhashes.ps1 <app>     # verify hashes
-```
+1. `.\bin\formatjson.ps1`            — normalize formatting/values, confirm JSON parses.
+2. `.\bin\checkver.ps1 <app>`        — confirm the detected version matches `version`.
+3. `.\bin\checkurls.ps1 <app>`       — every download URL resolves.
+4. `.\bin\checkhashes.ps1 <app>`     — only when the manifest ships `hash` values; for hashless manifests it errors with "URLS and hashes count mismatch" (expected — skip).
 
-Debug with `scoop config debug $true`. Test `autoupdate` by lowering `version`, running `.\bin\checkver.ps1 <app> -u`, then inspecting `url` / `hash` / `extract_dir`. Other checkver flags: `-f` (force), `-s` (skip updated), `-v VER` (use a given version).
+**Do NOT bootstrap hashes with `checkver -ForceUpdate` or hand-rolled `Get-FileHash`.** If upstream provides no checksum, ship the manifest hashless (see autoupdate § above); Excavator fills hashes in CI. `checkhashes.ps1 -Update` fixes *wrong* hashes in place but cannot bootstrap a *missing* `hash` field (it aborts on URL/hash count mismatch).
+
+Hashes are lowercase hex by convention — Scoop's `format_hash` enforces `.toLower()`.
+
+Debug with `scoop config debug $true`. Other checkver flags: `-f` (force), `-s` (skip updated), `-v VER` (use a given version).
 
 This repo is auto-updated by the Excavator GitHub Action (`.github/workflows/excavator.yml`) on schedule and on push.
 
 ## Repo conventions (quick facts)
 
-- 21/22 manifests use `shortcuts`; only 5/22 use `bin` (most apps are GUI-only).
+- 20/23 manifests use `shortcuts`; 6/23 use `bin` (most apps are GUI-only).
+- `arm64` builds are rare — `bucket/zread.json` is the only manifest shipping an `arm64` variant.
 - Chinese shortcut labels are allowed (e.g. `弹弹play`, `欧路词典`).
 - `license` strings in use: `MIT`, `GPL-2.0`, `GPL-3.0`, `LGPL-3.0`, `Freeware`.
 - URL-fragment rename (`#/dl.7z`, `#/dl.zip`) is the standard idiom to force an archive extension on a server that doesn't serve one.
 - `Expand-7ZipArchive` is the helper to unwrap NSIS-style `*setup.exe` payloads.
 - `checkver` + `autoupdate` should be on every manifest. A few in this repo currently ship only `version` — `bucket/at32-work-bench.json`, `bucket/ja-netfilter.json`, `bucket/logicanalyzer.json` — unfinished work awaiting a wired-up version source.
+- In-repo reference: `bucket/zread.json` — GitHub releases, dual-arch `64bit`+`arm64` (no `32bit`), `#/` raw-`.exe` rename, `bin` shim, product homepage → `checkver` object form, `autoupdate` without a `hash` block (download fallback in CI).
 - Reference examples — Main (`https://github.com/ScoopInstaller/Main/blob/master/bucket/<name>.json`): standard `architecture` + license object + shortcut subdirs → `7zip.json`; CLI single-arch + `env_*`/persist + `checkver:"github"` → `nvm.json`; dual-arch + per-arch `extract_dir` + `hash.url` → `nodejs.json`; `hash.find` (extract mode) → `curl.json`; `hash` via `$version` URL → `julia.json`; `hash` `rdf` mode → `imagemagick.json`; `checkver` capture groups (`$matchTag`) → `git.json`; `bin` alias shims → `busybox.json`; `suggest` → `ant.json`; `hash` `$url`-derivative → `apache.json`; `checkver:{github}` → `cmder.json`; `checkver` `jsonpath`/`jp` → `nuget.json`.
 - Reference examples — Extras (`https://github.com/ScoopInstaller/Extras/blob/master/bucket/<name>.json`): GUI app + shortcuts + `Expand-7ZipArchive` unwrap → `heynote.json`; `Expand-7ZipArchive` dual-arch → `another-redis-desktop-manager.json`; shared download + per-arch `bin`/`shortcuts` + shortcut subdirs → `sysinternals.json`; SourceForge URL → `nsis.json`; `installer.script` (`Start-Process` installer exe) → `calibre.json`.
 
