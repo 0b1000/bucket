@@ -5,9 +5,10 @@
     "license": "Freeware",
     "url": "https://arterychip.com/download/AT32%20Workbench/AT32_Work_Bench_Win-x86_64_V1.2.04.zip",
     "hash": "23f2e1b74c9b6ba4ab110bd0c4547f4d03a56b9638e822124034bfa5b5fb00e5",
+    "pre_install": "Get-ChildItem $dir -Directory | Where-Object { $_.Name -like 'AT32_Work_Bench_V*' } | Rename-Item -NewName 'AT32_Work_Bench'",
     "shortcuts": [
         [
-            "AT32_Work_Bench_V1.2.04/AT32_Work_Bench.exe",
+            "AT32_Work_Bench/AT32_Work_Bench.exe",
             "AT32 Work Bench"
         ]
     ],
@@ -16,12 +17,6 @@
         "jsonpath": "$.data[?(@.docNo=='AT32 Work Bench')].cnVersion"
     },
     "autoupdate": {
-        "url": "https://arterychip.com/download/AT32%20Workbench/AT32_Work_Bench_Win-x86_64_V$version.zip",
-        "shortcuts": [
-            [
-                "AT32_Work_Bench_V$version/AT32_Work_Bench.exe",
-                "AT32 Work Bench"
-            ]
-        ]
+        "url": "https://arterychip.com/download/AT32%20Workbench/AT32_Work_Bench_Win-x86_64_V$version.zip"
     }
 }
