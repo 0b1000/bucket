@@ -2,7 +2,7 @@
     "version": "18.1.3.0",
     "description": "A free to use bangumi player with danmaku support.",
     "homepage": "https://www.dandanplay.com/",
-    "license": "Freeware",
+    "license": "Proprietary",
     "extract_dir": "dandanplay-x64",
     "architecture": {
         "64bit": {

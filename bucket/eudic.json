@@ -2,7 +2,7 @@
     "version": "2026-04-09",
     "description": "权威的英语词典软件，英语学习者必备的工具。",
     "homepage": "https://www.eudic.net/",
-    "license": "Freeware",
+    "license": "Proprietary",
     "architecture": {
         "64bit": {
             "url": "https://www.eudic.net/download/eudic_win.zip?v=2026-04-09#/dl.zip",
