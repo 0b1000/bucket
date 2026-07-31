@@ -9,6 +9,12 @@
             "hash": "53a48f42f1b48e29fd999079ddf34236f19ec50178497b74cbe992393e6e894f"
         }
     },
+    "pre_install": [
+        "if (!(Test-Path \"$persist_dir\\HoYo.Gacha.v1.db\")) {",
+        "    New-Item \"$dir\\HoYo.Gacha.v1.db\" -ItemType File | Out-Null",
+        "}"
+    ],
+    "persist": "HoYo.Gacha.v1.db",
     "shortcuts": [
         [
             "HoYo.Gacha.exe",
