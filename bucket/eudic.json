@@ -5,17 +5,11 @@
     "license": "Proprietary",
     "architecture": {
         "64bit": {
-            "url": "https://www.eudic.net/download/eudic_win.zip?v=2026-04-09#/dl.zip",
-            "hash": "dcde28bcff7443c1ab14bbd168ce93300d2aab23b0080f26b3cf3e0d1e81ba6f"
+            "url": "https://static.eudic.net/pkg/pack_en.zip?v=2026-04-09#/dl.zip",
+            "hash": "53701095135dda0f7353fa69ae5d86bde5b147a515f17499133d0a40b30baea2"
         }
     },
-    "installer": {
-        "script": [
-            "Expand-7ZipArchive \"$dir\\eudic_win.exe\" \"$dir\" -Removal",
-            "Expand-7ZipArchive \"$dir\\app.7z\" \"$dir\" -Removal",
-            "Remove-Item \"$dir\\`$PLUGINSDIR\" -Force -Recurse"
-        ]
-    },
+    "extract_dir": "eudic",
     "shortcuts": [
         [
             "eudic.exe",
@@ -24,12 +18,12 @@
     ],
     "checkver": {
         "url": "https://www.eudic.net/v4/en/app/download",
-        "regex": "eudic_win.zip\\?v=([\\d-]+)\""
+        "regex": "zip\\?v=([\\d-]+)\""
     },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://www.eudic.net/download/eudic_win.zip?v=$version#/dl.zip"
+                "url": "https://static.eudic.net/pkg/pack_en.zip?v=$version#/dl.zip"
             }
         }
     }
