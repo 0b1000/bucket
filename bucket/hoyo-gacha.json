@@ -11,7 +11,7 @@
     },
     "pre_install": [
         "if (!(Test-Path \"$persist_dir\\HoYo.Gacha.v1.db\")) {",
-        "    New-Item \"$dir\\HoYo.Gacha.v1.db\" -ItemType File | Out-Null",
+        "    New-Item -Path \"$dir\\HoYo.Gacha.v1.db\" -ItemType File | Out-Null",
         "}"
     ],
     "persist": "HoYo.Gacha.v1.db",
