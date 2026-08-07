@@ -5,8 +5,7 @@
     "license": "Proprietary",
     "architecture": {
         "64bit": {
-            "url": "https://static.eudic.net/pkg/pack_en.zip?v=2026-04-09#/dl.zip",
-            "hash": "53701095135dda0f7353fa69ae5d86bde5b147a515f17499133d0a40b30baea2"
+            "url": "https://static.eudic.net/pkg/pack_en.zip?v=2026-04-09#/dl.zip"
         }
     },
     "extract_dir": "eudic",
