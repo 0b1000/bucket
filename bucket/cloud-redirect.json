@@ -9,6 +9,12 @@
             "hash": "d12a85aec6445b96b7777642d58c2412c236623de7f21ed5d8adb65d771d9f23"
         }
     },
+    "pre_install": [
+        "if (!(Test-Path \"$persist_dir\\localcloud\")) {",
+        "    New-Item -Path \"$dir\\localcloud\" -ItemType Directory | Out-Null",
+        "}"
+    ],
+    "persist": "localcloud",
     "shortcuts": [
         [
             "CloudRedirect.exe",
