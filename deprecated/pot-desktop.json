@@ -1,6 +1,6 @@
 {
     "version": "3.0.7",
-    "description": "A cross-platform software for text translation and recognition.",
+    "description": "A cross-platform software for text translation and recognition",
     "homepage": "https://github.com/pot-app/pot-desktop",
     "license": "GPL-3.0",
     "architecture": {

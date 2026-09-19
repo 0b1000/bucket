@@ -1,6 +1,6 @@
 {
     "version": "2.1.0",
-    "description": "DW version of mpv.net_CM with customized playback interface, context menu, thumbnails, video filters and shaders.",
+    "description": "DW version of mpv.net_CM with customized playback interface, context menu, thumbnails, video filters and shaders",
     "homepage": "https://github.com/diana7127/mpv.net-DW",
     "license": "GPL-2.0",
     "architecture": {

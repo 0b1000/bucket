@@ -1,6 +1,6 @@
 {
     "version": "3.5.0",
-    "description": "An image upload and manage tool, base on PicGo.",
+    "description": "An image upload and manage tool, base on PicGo",
     "homepage": "https://piclist.cn/",
     "license": "MIT",
     "architecture": {
