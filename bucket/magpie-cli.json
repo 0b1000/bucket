@@ -9,12 +9,7 @@
             "hash": "e747831f4b9bff8213db7642b842ee608fec6dc951f99643005fef15d3da12a8"
         }
     },
-    "shortcuts": [
-        [
-            "magpie.exe",
-            "magpie"
-        ]
-    ],
+
     "bin": "magpie-cli.exe",
     "checkver": {
         "github": "https://github.com/yetone/magpie-releases"
