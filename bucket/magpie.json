@@ -5,7 +5,7 @@
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/yetone/magpie-releases/releases/download/v0.1.64/magpie-windows-amd64.exe#/magpie-cli.exe",
+            "url": "https://github.com/yetone/magpie-releases/releases/download/v0.1.64/magpie-windows-amd64.exe#/magpie.exe",
             "hash": "2fc462c90fb077ea6fb55fcab855b26912d9ee479d71e09a1d71368858dcb8c3"
         }
     },
