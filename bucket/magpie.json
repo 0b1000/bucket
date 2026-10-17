@@ -1,12 +1,12 @@
 {
-    "version": "0.1.1266",
+    "version": "0.1.1278",
     "description": "Codex on DeepSeek, Claude Code on Kimi, from the menu bar",
     "homepage": "https://github.com/yetone/magpie",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/yetone/magpie-releases/releases/download/v0.1.1266/magpie-windows-amd64.exe#/magpie.exe",
-            "hash": "020b0c410fef6e08b31b3cdf4560343d435e9483af2eff46b7aba589cd68ef39"
+            "url": "https://github.com/yetone/magpie-releases/releases/download/v0.1.1278/magpie-windows-amd64.exe#/magpie.exe",
+            "hash": "9c003d022394c0aaeb6508d7b24cc9d3e7efff790e18e5271598ba650fbe2122"
         }
     },
     "shortcuts": [
