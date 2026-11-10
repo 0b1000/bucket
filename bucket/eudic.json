@@ -1,11 +1,12 @@
 {
-    "version": "2026-04-09",
+    "version": "10261007",
     "description": "权威的英语词典软件，英语学习者必备的工具",
     "homepage": "https://www.eudic.net/",
     "license": "Proprietary",
     "architecture": {
         "64bit": {
-            "url": "https://static.eudic.net/pkg/pack_en.zip?v=2026-04-09#/dl.zip"
+            "url": "https://static.eudic.net/pkg/pack_en.zip?v=10261007#/dl.zip",
+            "hash": "b26baba1bc1d0a30a38ce5253bc4ce4c06ad84123016cbb3e6c8b2481f0275bc"
         }
     },
     "extract_dir": "eudic",
